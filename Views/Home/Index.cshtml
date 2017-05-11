@@ -1,0 +1,81 @@
+﻿@model PokemonApp.Models.FormData
+@using PokemonApp.Models
+
+@{
+    ViewBag.Title = "Home Page";
+
+    var selectListItems = new[]
+    {
+        new SelectListItem { Value = "1", Text = "Item 1"},
+        new SelectListItem { Value = "2", Text = "Item 2"},
+    };
+
+    var items = new[]
+    {
+        new { Id=1, Name="Item 1"},
+        new { Id=2, Name="Item 2"},
+    };
+
+    var selectListItemsNew = new SelectList(items, "Id", "Name");
+}
+
+@if (Model != null)
+{
+    <p>You have successfully completed the form</p>
+}
+else
+{
+
+    using (Html.BeginForm())
+    {
+
+        @Html.ValidationSummary()
+
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+
+        @Html.LabelFor(m => m.Date, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Date, new { @class = "form-control" })
+
+        @Html.LabelFor(m => m.Duration, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Duration, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Duration)
+
+        <div>
+
+            @Html.LabelFor(m => m.ActivityId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.ActivityId, selectListItems, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ActivityId)
+
+        </div>
+
+        <div>
+            <label class="radio-inline">
+
+                @Html.RadioButtonFor(m => m.Intensity, FormData.IntensityLevel.Low) @FormData.IntensityLevel.Low
+
+            </label>
+            <label class="radio-inline">
+
+                @Html.RadioButtonFor(m => m.Intensity, FormData.IntensityLevel.Medium) @FormData.IntensityLevel.Medium
+
+            </label>
+            <label class="radio-inline">
+
+                @Html.RadioButtonFor(m => m.Intensity, FormData.IntensityLevel.High) @FormData.IntensityLevel.High
+
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>@Html.CheckBoxFor(m => m.Exclude) @Html.DisplayNameFor(m => m.Exclude)</label>
+
+        </div>
+
+        <input type="submit" value="Submit" />
+
+    }
+}
+
+
+
+
